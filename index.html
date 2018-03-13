@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+    div{
+        margin-top:10px
+    }
+    .result{
+        display: inline-block;
+        border: solid black 1px;
+        width: 50px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class App extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {number:''};
+                this.handleConvert = this.handleConvert.bind(this);
+                this.handleTyping = this.handleTyping.bind(this);
+            }
+
+            handleConvert(event){
+                event.preventDefault();
+                let binary = document.getElementById('number').value;
+                let decimal = parseInt(binary, 2);
+                this.setState({number: decimal});
+            }
+
+            handleTyping(event){
+                if(event.keyCode != 48 && event.keyCode != 49 && event.keyCode != 8) {
+                event.preventDefault();
+                }
+            }
+
+            render(){
+                let input = <form onSubmit={this.handleConvert} className = "input">
+                            Binary: <input type="text"
+                                           id="number" 
+                                           maxLength="8" 
+                                           pattern="[0-1]{8}" 
+                                           placeholder="e.g. 10101010"
+                                           onKeyDown={this.handleTyping}
+                                           required/>
+                                    <input type="submit" value="CONVERT"/>
+                            </form>;
+
+                if (this.state.number=="") {
+                    return <div>{input}</div>;
+                }
+                return (<div>
+                        {input}
+                        <div>Decimal: <div className="result">{this.state.number}</div>
+                        </div>
+                        </div>);
+            }
+
+        } 
+        const root = document.getElementById('root');
+        ReactDOM.render(<App/>, root);
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      To set up a production-ready React build environment, follow these instructions:
+      * https://reactjs.org/docs/add-react-to-a-new-app.html
+      * https://reactjs.org/docs/add-react-to-an-existing-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      * https://reactjs.org/docs/react-without-jsx.html
+      * https://reactjs.org/docs/cdn-links.html
+    -->
+  </body>
+</html>
