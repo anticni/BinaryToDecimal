@@ -31,7 +31,7 @@
 
             handleConvert(event){
                 event.preventDefault();
-                let binary = document.getElementById('number').value;
+                let binary = this.ref.value;
                 let decimal = String(parseInt(binary, 2));
                 console.log(decimal);
                 this.setState({number: decimal});
@@ -51,6 +51,7 @@
                                            pattern="[0-1]{8}" 
                                            placeholder="e.g. 10101010"
                                            onKeyDown={this.handleTyping}
+                                           ref={input => this.ref = input}
                                            required/>
                                     <input type="submit" value="CONVERT"/>
                             </form>;
